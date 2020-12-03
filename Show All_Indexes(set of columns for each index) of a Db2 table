@@ -1,0 +1,5 @@
+SELECT SUBSTR(I.NAME,1,15),I.UNIQUERULE,K.COLNAME           
+  FROM SYSIBM.SYSKEYS K INNER JOIN SYSIBM.SYSINDEXES I      
+    ON IXNAME=NAME                                          
+   AND   TBNAME='APT_A01_DOCUMENT'                          
+ GROUP BY I.NAME,I.UNIQUERULE,K.COLNAME;                    
