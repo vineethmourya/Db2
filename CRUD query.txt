@@ -1,0 +1,40 @@
+     SELECT                                                             00010099
+       SUBSTR(TTNAME,1,30)   AS NAME                                    00020099
+     , SUBSTR(GRANTEE,1,10)  AS PROGRAM                                 00030099
+     , CASE WHEN INSERTAUTH = 'Y' THEN 'I'                              00040099
+                 ELSE '-'                                               00050099
+            END      AS I                                               00060099
+     , CASE WHEN SELECTAUTH = 'Y' THEN 'R'                              00070099
+                 ELSE '-'                                               00080099
+            END      AS R                                               00090099
+     , CASE WHEN UPDATEAUTH = 'Y' THEN 'U'                              00100099
+                 ELSE '-'                                               00110099
+            END      AS U                                               00120099
+     , CASE WHEN DELETEAUTH = 'Y' THEN 'D'                              00130099
+                 ELSE '-'                                               00140099
+            END      AS D                                               00150099
+--   , CASE WHEN COLLID = 'P' THEN '** PLAN **'                         00160099
+--               ELSE COLLID                                            00170099
+--          END      AS "PLAN/COLLECTION"                               00180099
+--   , HEX(CONTOKEN)  AS TOKEN                                          00190099
+       FROM SYSIBM.SYSTABAUTH                                           00200099
+      WHERE GRANTEETYPE = 'P'                                           00210099
+      AND   TTNAME LIKE 'SMMPD20%'                                      00220099
+      AND (SUBSTR(GRANTEE,1,4) = 'PA00'                                 00230099
+--    OR  (SUBSTR(GRANTEE,1,4) = 'SMMP' AND SUBSTR(GRANTEE,7,2) = 'FA') 00240099
+      OR (SUBSTR(GRANTEE,1,4) = 'SMMP' AND SUBSTR(GRANTEE,7,2) = 'FA')  00250099
+      OR (SUBSTR(GRANTEE,1,4) = 'SMMP' AND SUBSTR(GRANTEE,7,2) = 'EA')) 00260099
+--    AND SUBSTR(GRANTEE,1,08) = 'PA0067RA'                             00270099
+--    AND INSERTAUTH = 'Y'                                              00280099
+--    AND SELECTAUTH = 'Y'                                              00290099
+--    AND UPDATEAUTH = 'Y'                                              00300099
+--    AND DELETEAUTH = 'Y'                                              00310099
+      GROUP BY TTNAME                                                   00320099
+              ,GRANTEE                                                  00330099
+              ,INSERTAUTH                                               00340099
+              ,SELECTAUTH                                               00350099
+              ,UPDATEAUTH                                               00360099
+              ,DELETEAUTH                                               00370099
+      ORDER BY PROGRAM                                                  00380099
+  WITH UR;                                                              00390099
+
